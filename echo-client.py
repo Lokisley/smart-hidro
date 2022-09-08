@@ -4,8 +4,9 @@ HOST = "172.16.103.212" #localhost
 PORT = 54321
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b"Hello World")
-    data = s.recv(1024)
+    s.sendto("Hello World".encode('utf-8'), (HOST, PORT))
+    data, addr = s.recvfrom(1024)
 
-print(f"Received {data}")
+print(f"Received {data.decode('utf-8')}")
+
+s.close()
